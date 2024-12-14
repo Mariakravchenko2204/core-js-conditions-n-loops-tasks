@@ -21,8 +21,11 @@
  *  0  => true
  *  -5 => false
  */
-function isPositive(/* number */) {
-  throw new Error('Not implemented');
+function isPositive(number) {
+  if (number >= 0) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -38,8 +41,14 @@ function isPositive(/* number */) {
  *  -5, 0, 5      => 5
  *  -0.1, 0, 0.2  => 0.2
  */
-function getMaxNumber(/* a, b, c */) {
-  throw new Error('Not implemented');
+function getMaxNumber(a, b, c) {
+  if (a > b && a > c) {
+    return a;
+  }
+  if (b > a && b > c) {
+    return b;
+  }
+  return c;
 }
 
 /**
@@ -60,8 +69,79 @@ function getMaxNumber(/* a, b, c */) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  function checkResult(x, y) {
+    if (x === king.x && y === king.y) {
+      return true;
+    }
+    return false;
+  }
+  let res = false;
+  let qx = queen.x;
+  let qy = queen.y;
+  while (qy > 1) {
+    qy -= 1;
+    res = checkResult(qx, qy);
+    if (res) break;
+  }
+  if (res) return res;
+  qy = queen.y;
+  while (qy <= 8) {
+    qy += 1;
+    res = checkResult(qx, qy);
+    if (res) break;
+  }
+  if (res) return res;
+  qy = queen.y;
+  while (qx > 1) {
+    qx -= 1;
+    res = checkResult(qx, qy);
+    if (res) break;
+  }
+  if (res) return res;
+  qx = queen.x;
+  while (qx <= 8) {
+    qx += 1;
+    res = checkResult(qx, qy);
+    if (res) break;
+  }
+  if (res) return res;
+  qx = queen.x;
+  while (qx > 1 && qy > 1) {
+    qx -= 1;
+    qy -= 1;
+    res = checkResult(qx, qy);
+    if (res) break;
+  }
+  if (res) return res;
+  qx = queen.x;
+  qy = queen.y;
+  while (qx <= 8 && qy <= 8) {
+    qx += 1;
+    qy += 1;
+    res = checkResult(qx, qy);
+    if (res) break;
+  }
+  if (res) return res;
+  qx = queen.x;
+  qy = queen.y;
+  while (qx <= 8 && qy > 1) {
+    qx += 1;
+    qy -= 1;
+    res = checkResult(qx, qy);
+    if (res) break;
+  }
+  if (res) return res;
+  qx = queen.x;
+  qy = queen.y;
+  while (qy <= 8 && qx > 1) {
+    qy += 1;
+    qx -= 1;
+    res = checkResult(qx, qy);
+    if (res) break;
+  }
+  if (res) return res;
+  return res;
 }
 
 /**
@@ -82,8 +162,16 @@ function canQueenCaptureKing(/* queen, king */) {
  *  2, 2, 5   => false
  *  3, 0, 3   => false
  */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  if (a === 0 || b === 0 || c === 0) return false;
+  if (
+    (a === b && a + b > c) ||
+    (b === c && b + c > a) ||
+    (a === c && a + c > b)
+  ) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -100,8 +188,29 @@ function isIsoscelesTriangle(/* a, b, c */) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  let res = '';
+  const tens = Math.floor(num / 10);
+  const five = Math.floor((num - tens * 10) / 5);
+  const singles = num - (tens * 10 + five * 5);
+  for (let i = 0; i < tens; i += 1) {
+    res += 'X';
+  }
+  if (num - tens * 10 === 9) {
+    res += 'IX';
+  } else {
+    for (let i = 0; i < five; i += 1) {
+      res += 'V';
+    }
+    if (singles < 4) {
+      for (let i = 0; i < singles; i += 1) {
+        res += 'I';
+      }
+    } else {
+      res += 'IV';
+    }
+  }
+  return res;
 }
 
 /**
@@ -119,8 +228,57 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  let res = '';
+  for (let i = 0; i < numberStr.length; i += 1) {
+    switch (numberStr[i]) {
+      case '0':
+        res += 'zero';
+        break;
+      case '1':
+        res += 'one';
+        break;
+      case '2':
+        res += 'two';
+        break;
+      case '3':
+        res += 'three';
+        break;
+      case '4':
+        res += 'four';
+        break;
+      case '5':
+        res += 'five';
+        break;
+      case '6':
+        res += 'six';
+        break;
+      case '7':
+        res += 'seven';
+        break;
+      case '8':
+        res += 'eight';
+        break;
+      case '9':
+        res += 'nine';
+        break;
+      case '.':
+        res += 'point';
+        break;
+      case ',':
+        res += 'point';
+        break;
+      case '-':
+        res += 'minus';
+        break;
+      default:
+        res += '';
+    }
+    if (i !== numberStr.length - 1) {
+      res += ' ';
+    }
+  }
+  return res;
 }
 
 /**
